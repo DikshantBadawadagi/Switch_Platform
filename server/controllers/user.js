@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import Video from "../models/Video.js";
 import ApiError from "../error.js";
 import {HTTP_SUCCESS} from "../utils.js";
 
@@ -79,6 +80,8 @@ export const unsubscribe = async (req,res,next) => {
 
 export const like = async (req,res,next) => {
     try{
+        await Video.likeVideo(req.params.videoId, req.user.id);
+        HTTP_SUCCESS(res, "Video has been dis-liked");
 
     }catch(err){
         next(err);
@@ -87,6 +90,8 @@ export const like = async (req,res,next) => {
 
 export const dislike = async (req,res,next) => {
     try{
+        await Video.dislikeVideo(req.params.videoId, req.user.id);
+        HTTP_SUCCESS(res, "Video has been dis-liked");
 
     }catch(err){
         next(err);
