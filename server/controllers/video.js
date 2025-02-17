@@ -124,7 +124,7 @@ export const sub = async (req,res,next) => {
 
 export const getByTag = async (req,res,next) => {
     try {
-    const videos = await Video.searchVideos(req.query.tags.split(",")).limit(20);
+    const videos = await Video.searchVideos(req.query.tags.split(","));
         if(!videos) {
             throw new ApiError(404, "Error fetching videos");
         }
@@ -137,11 +137,7 @@ export const getByTag = async (req,res,next) => {
 
 export const search = async (req,res,next) => {
     try {
-        const user = await User.findById(req.user.id);
-        if(!user) {
-            throw new ApiError(404, "Something went wrong while fetching user");
-        }
-    const videos = await user.getSubscribedVideos(Video);
+        const videos = await Video.searchVideos(req.query.search);
         if(!videos) {
             throw new ApiError(404, "Error fetching videos");
         }
